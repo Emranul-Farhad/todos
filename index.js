@@ -68,7 +68,7 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 
 // initial testing key 
 app.get('/', (req, res) => {
-    res.send('Hello Worldt his is okay test perfect')
+    res.send('Hello Worldt his is ')
 })
 
 app.listen(port, () => {
