@@ -26,13 +26,12 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
     await client.connect()
     const collection = client.db('todo').collection('data');
 
-   
-    // get 
+    
+//    data get from client side
     app.get('/story', async(req,res)=> {
         const result = await collection.find().toArray()
         res.send(result)
     } )
-
     
 
     // delete
@@ -68,7 +67,7 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 
 // initial testing key 
 app.get('/', (req, res) => {
-    res.send('Hello Worldt his is ')
+    res.send('Hello World this git test ')
 })
 
 app.listen(port, () => {
