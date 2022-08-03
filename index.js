@@ -3,7 +3,7 @@ const app = express()
 const port = process.env.PORT || 8000
 var cors = require('cors')
 require('dotenv').config()
-const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId, ObjectID } = require('mongodb');
 
 
 
@@ -13,47 +13,74 @@ app.use(cors())
 
 
 // mongo cluster 
-const uri =`mongodb+srv://${process.env.NAME}:${process.env.PASS}@cluster0.u6gap.mongodb.net/?retryWrites=true&w=majority` ;
+const uri = `mongodb+srv://${process.env.NAME}:${process.env.PASS}@cluster0.u6gap.mongodb.net/?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
 
 
 
- async function run() {
+async function run() {
 
-   try{
+    try {
 
-    await client.connect()
-    const collection = client.db('todo').collection('data');
+        await client.connect()
+        const collection = client.db('todo').collection('data');
 
-    
-//    data get from client side
-    app.get('/story', async(req,res)=> {
-        const result = await collection.find().toArray()
-        res.send(result)
-    } )
-    
 
-    // delete
-    app.delete('/delete/:id', async(req,res)=> {
-        const id = req.params.id
-        const filter = {_id:ObjectId(id)};
-        const remove = await collection.deleteOne(filter)
-        res.send(remove)
-    } )
-   
+        //    data get from client side
+        app.get('/story', async (req, res) => {
+            const result = await collection.find().toArray()
+            res.send(result)
+        })
+
+    //    post method todos data collect from client side
+       app.post('/send', async(req,res) => {
+        const todosget = req.body;
+        console.log(todosget)
+        const todostore = await collection.insertOne(todosget);
+        res.send(todostore)
+       } )
 
 
 
-   }
 
-   finally{
+        // put method for get data from clinet and update 
+       app.put('/post/:story', async(req,res)=> {
+        const data = req.body
+        console.log(data)
+        const story = req.params.story;
+        console.log(story)
+        const filter = {story: story};
+        console.log(filter)
+        const options = { upsert: true };
+        const updateDoc = {
+          $set: data
+        };
+        const storeindb = await collection.updateOne(filter, updateDoc, options)
+        res.send(storeindb)
+       } )
 
-   }
 
- }
+        // delete
+        app.delete('/delete/:id', async (req, res) => {
+            const id = req.params.id
+            const filter = { _id: ObjectId(id) };
+            const remove = await collection.deleteOne(filter)
+            res.send(remove)
+        })
 
- run().catch(console.dir);
+
+
+
+    }
+
+    finally {
+
+    }
+
+}
+
+run().catch(console.dir);
 
 // client.connect(err => {
 //   const collection = client.db("test").collection("devices");
