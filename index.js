@@ -36,7 +36,6 @@ async function run() {
     //    post method todos data collect from client side
        app.post('/send', async(req,res) => {
         const todosget = req.body;
-        console.log(todosget)
         const todostore = await collection.insertOne(todosget);
         res.send(todostore)
        } )
@@ -44,13 +43,13 @@ async function run() {
 
 
 
-        // put method for get data from clinet and update 
-       app.put('/post/:story', async(req,res)=> {
+        // put method for update data from client side
+       app.put('/post/:id', async(req,res)=> {
         const data = req.body
         console.log(data)
-        const story = req.params.story;
-        console.log(story)
-        const filter = {story: story};
+        const id = req.params.id;
+        console.log(id)
+        const filter = {_id:ObjectId(id)};
         console.log(filter)
         const options = { upsert: true };
         const updateDoc = {
