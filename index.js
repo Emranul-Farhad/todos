@@ -85,7 +85,7 @@ run().catch(console.dir);
 
 // initial testing key 
 app.get('/', (req, res) => {
-    res.send('Hello World this git test ')
+    res.send('Hello World this vercel test ')
 })
 
 app.listen(port, () => {
