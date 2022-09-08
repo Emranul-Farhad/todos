@@ -7,6 +7,16 @@
      }
     ],
     "routes": [
-       { "src": "/(.*)", "dest": "/index.js" }
+       {
+        
+        "src": "/(.*)",
+         "GET": "/story" ,
+         "POST" : "/send",
+         "PUT": "/post/:id",
+         "DELETE" :  "/delete/:id",
+        "dest": "/index.js",
+        "methods" : [ "GET", "POST", "PUT", "DELETE"]
+    
+    }
     ]
  }

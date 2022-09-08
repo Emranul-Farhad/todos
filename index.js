@@ -80,13 +80,6 @@ async function run() {
 
 run().catch(console.dir);
 
-// client.connect(err => {
-//   const collection = client.db("test").collection("devices");
-//   // perform actions on the collection object
-//   console.log('connected from here')
-//   client.close();
-// });
-
 
 
 
