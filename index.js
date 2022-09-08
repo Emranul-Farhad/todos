@@ -36,11 +36,10 @@ async function run() {
     //    post method todos data collect from client side
        app.post('/send', async(req,res) => {
         const todosget = req.body;
+        console.log(todosget)
         const todostore = await collection.insertOne(todosget);
         res.send(todostore)
        } )
-
-
 
 
         // put method for update data from client side
